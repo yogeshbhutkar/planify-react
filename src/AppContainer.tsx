@@ -6,7 +6,9 @@ export default function AppContainer(props: { children: React.ReactNode }) {
     <div className="bg-[#15161A] h-screen">
       <div>
         <Navbar />
-        <div className=" lg:w-[50%] w-[75%] mx-auto">{props.children}</div>
+        <div className="flex items-center justify-center mx-auto">
+          {props.children}
+        </div>
       </div>
     </div>
   );

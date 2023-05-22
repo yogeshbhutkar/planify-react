@@ -1,9 +1,9 @@
 import { Link } from "raviger";
-import   { useState } from 'react'
+import { useState } from "react";
+import { checkLoggedIn } from "../router/AppRouter";
 
 function Navbar() {
-
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const menuData = [
     {
@@ -43,8 +43,8 @@ function Navbar() {
     },
     {
       id: 3,
-      name: "Login",
-      link: "/login",
+      name: checkLoggedIn() ? "Logout" : "Login",
+      link: checkLoggedIn() ? "/logout" : "/login",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -64,10 +64,13 @@ function Navbar() {
     },
   ];
 
-
   return (
-    <div className={`bg-[#1E1F25] float-left min-h-screen ${open? "w-72": "w-16"} duration-500 text-gray-100 p-3 inline-block`}>
-      <div className="py-3 flex justify-end" onClick={()=>setOpen(!open)}>
+    <div
+      className={`bg-[#1E1F25] float-left min-h-screen ${
+        open ? "w-72" : "w-16"
+      } duration-500 text-gray-100 p-3 inline-block`}
+    >
+      <div className="py-3 flex justify-end" onClick={() => setOpen(!open)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -84,17 +87,59 @@ function Navbar() {
         </svg>
       </div>
       <div className="mt-4 flex flex-col gap-4 relative">
-        {menuData.map((ele) => (
-          <Link
-            className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#272A30]"
-            href={ele.link}
-            key={ele.id}
-          >
-            <div>{ele.icon}</div>
-            <h2 style={{transitionDelay: `${ele.id+3}00ms`}} className={`whitespace-pre duration-500 ${!open && 'opacity-0 translate-x-28 overflow-hidden'}`}>{ele.name}</h2>
-            <h2 className={`${open && "hidden"} absolute left-48 bg-[#272A30] font-semibold whitespace-pre text-gray-200 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:w-fit group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300`}>{ele.name}</h2>
-          </Link>
-        ))}
+        {menuData.map((ele) =>
+          ele.link === "/logout" ? (
+            <Link
+              className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#272A30]"
+              onClick={() => {
+                localStorage.removeItem("token");
+                window.location.reload();
+              }}
+              href=""
+              key={ele.id}
+            >
+              <div>{ele.icon}</div>
+              <h2
+                style={{ transitionDelay: `${ele.id + 3}00ms` }}
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                {ele.name}
+              </h2>
+              <h2
+                className={`${
+                  open && "hidden"
+                } absolute left-48 bg-[#272A30] font-semibold whitespace-pre text-gray-200 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:w-fit group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300`}
+              >
+                {ele.name}
+              </h2>
+            </Link>
+          ) : (
+            <Link
+              className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#272A30]"
+              href={ele.link}
+              key={ele.id}
+            >
+              <div>{ele.icon}</div>
+              <h2
+                style={{ transitionDelay: `${ele.id + 3}00ms` }}
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                {ele.name}
+              </h2>
+              <h2
+                className={`${
+                  open && "hidden"
+                } absolute left-48 bg-[#272A30] font-semibold whitespace-pre text-gray-200 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:w-fit group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300`}
+              >
+                {ele.name}
+              </h2>
+            </Link>
+          )
+        )}
       </div>
     </div>
   );
