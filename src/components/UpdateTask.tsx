@@ -12,7 +12,7 @@ export default function UpdateTask(props: {
   itemID: number;
   stages: Result[];
 }) {
-  const [form, setForm] = useState<TaskForm>({
+  const [form, setForm] = useState<TaskUpdate>({
     title: props.statusTitle,
     description: props.statusDescription,
     created_on: props.createdOn,

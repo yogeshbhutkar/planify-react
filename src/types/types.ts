@@ -71,6 +71,12 @@ type TaskForm = {
   created_on: string;
 };
 
+type TaskUpdate = {
+  title: string;
+  description: string;
+  created_on: string;
+};
+
 type TaskObject = {
   title: string;
   description: string;

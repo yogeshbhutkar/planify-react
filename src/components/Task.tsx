@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import UpdateTask from "./UpdateTask";
 
 export default function Task(props: {
+  dueDate: string;
   itemID: number;
   stageTitle: string;
   boardID: number;
@@ -15,6 +16,31 @@ export default function Task(props: {
   stages: Result[];
 }) {
   const [editTask, setEditTask] = useState(false);
+  const dateObject = new Date();
+  const currentDate = dateObject.toISOString().split("T")[0];
+  const propsDate = new Date(props.dueDate).toISOString().split("T")[0];
+
+  const getFloater = () => {
+    if (currentDate === propsDate) {
+      return (
+        <p className="bg-purple-300 rounded-full mt-1 font-bold text-[12px] mr-1 text-purple-800 px-2 py-2">
+          Due Today
+        </p>
+      );
+    } else if (currentDate > propsDate) {
+      return (
+        <p className="bg-green-300 rounded-full mt-1 text-green-800 font-bold text-[12px] mr-1 px-2 py-2">
+          Due Tomorrow
+        </p>
+      );
+    } else if (currentDate < propsDate) {
+      return (
+        <p className="bg-red-300 rounded-full mt-1 font-bold text-[12px] mr-1 text-red-800 px-2 py-2">
+          Overdue
+        </p>
+      );
+    }
+  };
 
   return (
     <div
@@ -26,7 +52,7 @@ export default function Task(props: {
             props.removeParticularTaskCB(props.itemID)
           );
         }}
-        className="float-right hover:text-blue-600"
+        className="hover:text-blue-600"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -41,8 +67,9 @@ export default function Task(props: {
           />
         </svg>
       </button>
+      <div className="float-right">{getFloater()}</div>
       <div onClick={() => setEditTask(true)}>
-        <div>
+        <div className="pt-2">
           <div className="py-2 px-4">
             <p>
               <span className="font-bold text-gray-600">Title: </span>
@@ -50,7 +77,7 @@ export default function Task(props: {
             </p>
             <p>
               <span className="font-bold text-gray-600">Description: </span>
-              {props.description.split("#")[0]}
+              {props.description}
             </p>
           </div>
         </div>

@@ -118,7 +118,8 @@ export default function StageCard(props: {
               item.status_object.id === props.id ? (
                 <Task
                   boardID={props.boardID}
-                  description={item.description}
+                  description={item.description.split("#")[0]}
+                  dueDate={item.description.split("#")[1]}
                   itemID={item.id}
                   removeParticularTaskCB={props.removeParticularTaskCB}
                   title={item.title}
