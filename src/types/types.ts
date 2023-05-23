@@ -66,6 +66,7 @@ type PostTaskPayload = {
 
 type TaskForm = {
   title: string;
+  dueDate: string;
   description: string;
   created_on: string;
 };

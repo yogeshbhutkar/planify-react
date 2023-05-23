@@ -13,23 +13,43 @@ export default function CreateTask(props: {
   const [form, setForm] = useState<TaskForm>({
     title: "",
     description: "",
+    dueDate: "",
     created_on: "",
   });
   const [buttonText, setButtonText] = useState("Submit");
   const [titleError, setTitleError] = useState("");
+  const [dueDateError, setDueDateError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+
+  const dateObject = new Date();
+  const finalDate = dateObject.toISOString().split("T")[0];
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setDueDateError("");
     setTitleError("");
     setDescriptionError("");
 
     if (form.title.length === 0) {
       setTitleError("Title cannot be empty.");
+      return;
     }
+
+    if (form.dueDate.length === 0) {
+      setDueDateError("Due date cannot be empty.");
+      return;
+    }
+
     if (form.description.length === 0) {
       setDescriptionError("Description cannot be empty.");
+      return;
+    }
+    if (new Date(form.dueDate).toISOString().split("T")[0] < finalDate) {
+      console.log(new Date(form.dueDate).toDateString());
+      console.log(finalDate);
+      setDueDateError("Due Date cannot refer to a value in the past.");
+      return;
     }
 
     try {
@@ -44,9 +64,10 @@ export default function CreateTask(props: {
         },
         status: props.statusID,
         title: form.title,
-        description: form.description,
+        description: form.description + "#" + form.dueDate,
         board: props.boardID,
       };
+
       setButtonText("Loading");
 
       postTask(props.boardID, payload).then(() => {
@@ -107,6 +128,19 @@ export default function CreateTask(props: {
               }
             />
           </div>
+          <div className="pt-3">
+            <label className="font-bold text-md" htmlFor="date">
+              Due Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              className="border-1 focus:outline-none text-white border-slate-600 w-full  bg-[#3b4046]  rounded-lg p-2 my-2 flex-1"
+              value={form.dueDate}
+              onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
+            />
+          </div>
 
           {titleError && (
             <div className="text-white bg-red-400 text-center py-3 rounded-xl mt-5">
@@ -116,6 +150,11 @@ export default function CreateTask(props: {
           {descriptionError && (
             <div className="text-white bg-red-400 text-center py-3 rounded-xl mt-2">
               {descriptionError}
+            </div>
+          )}
+          {dueDateError && (
+            <div className="text-white bg-red-400 text-center py-3 rounded-xl mt-2">
+              {dueDateError}
             </div>
           )}
           <div className="flex flex-col">
