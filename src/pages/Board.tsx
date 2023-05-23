@@ -24,7 +24,7 @@ export default function Board(props: { id: number }) {
   useEffect(() => {
     try {
       getStages().then((res) => {
-        // setStages(res);
+        setStages(res);
         setResults(res.results);
       });
     } catch (err) {
@@ -47,9 +47,13 @@ export default function Board(props: { id: number }) {
   const [boardDetails, setBoardDetails] = useState<Result>();
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState<TaskResult[]>();
-  // const [stages, setStages] = useState<Stages>();
+  const [stages, setStages] = useState<Stages>();
   const [results, setResults] = useState<Result[]>();
   const [stageModal, setStageModal] = useState(false);
+
+  const removeParticularTask = (id: number) => {
+    setTasks((prev) => prev?.filter((item) => item.id !== id));
+  };
 
   const updateStages = (id: number) => {
     setResults((prev) => prev?.filter((item) => item.id !== id));
@@ -93,23 +97,27 @@ export default function Board(props: { id: number }) {
               </svg>
             </button>
           </div>
-          {results &&
-            results.map((item) => (
-              <div key={item.id} className="inline-flex">
-                <StageCard
-                  tasks={tasks}
-                  boardID={props.id}
-                  id={item.id}
-                  title={item.title}
-                  description={item.description}
-                  updateStagesCB={updateStages}
-                  boardTitle={boardDetails ? boardDetails.title : ""}
-                  boardDescription={
-                    boardDetails ? boardDetails.description : ""
-                  }
-                />
-              </div>
-            ))}
+          <div>
+            {results &&
+              results.map((item) => (
+                <div className="inline-flex " key={item.id}>
+                  <StageCard
+                    removeParticularTaskCB={removeParticularTask}
+                    tasks={tasks}
+                    stages={results}
+                    boardID={props.id}
+                    id={item ? item.id : -1}
+                    title={item ? item.title : ""}
+                    description={item ? item.description : ""}
+                    updateStagesCB={updateStages}
+                    boardTitle={boardDetails ? boardDetails.title : ""}
+                    boardDescription={
+                      boardDetails ? boardDetails.description : ""
+                    }
+                  />
+                </div>
+              ))}
+          </div>
           <div>
             <Modal open={stageModal} closeCB={() => setStageModal(false)}>
               <CreateStage closeFormCB={closeForm} />

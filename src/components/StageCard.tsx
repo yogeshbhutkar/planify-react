@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { deleteStage } from "../utils/apiUtils";
+import { deleteStage, deleteTask } from "../utils/apiUtils";
 import Modal from "./Modal";
 import UpdateStages from "./UpdateStages";
 import CreateTask from "./CreateTask";
+import UpdateTask from "./UpdateTask";
+import Task from "./Task";
 
 export default function StageCard(props: {
   tasks: TaskResult[] | undefined;
   boardID: number;
+  stages: Result[];
   id: number;
   title: string;
   description: string;
   boardTitle: string;
   boardDescription: string;
   updateStagesCB: (id: number) => void;
+  removeParticularTaskCB: (id: number) => void;
 }) {
   const [updateStage, setUpdateStage] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
+  const [showTaskSetting, setShowTaskSetting] = useState(false);
 
   const closeForm = () => {
     setUpdateStage(false);
@@ -106,24 +111,24 @@ export default function StageCard(props: {
           {props.tasks.map((item) => (
             <div
               key={item.id}
-              className="text-gray-700 px-4 my-2  rounded-lg bg-gray-300"
+              className={`text-gray-700 my-3 rounded-lg  bg-gray-100 ease-out hover:translate-y-1 transition-all`}
+              onClick={() => setShowTaskSetting(true)}
             >
-              {item.status_object.id === props.id ? (
-                <div className="py-2">
-                  <p>
-                    <span className="font-bold text-gray-600">Title: </span>
-                    {item.title}
-                  </p>
-                  <p>
-                    <span className="font-bold text-gray-600">
-                      Description:{" "}
-                    </span>
-                    {item.description}
-                  </p>
-                </div>
-              ) : (
-                ""
-              )}
+              {item.status_object.id &&
+              props.id &&
+              item.status_object.id === props.id ? (
+                <Task
+                  boardID={props.boardID}
+                  description={item.description}
+                  itemID={item.id}
+                  removeParticularTaskCB={props.removeParticularTaskCB}
+                  title={item.title}
+                  stageTitle={props.title}
+                  createdOn={item.created_date}
+                  statusID={props.id}
+                  stages={props.stages}
+                />
+              ) : null}
             </div>
           ))}
         </div>

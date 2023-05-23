@@ -99,3 +99,15 @@ export const postTask = (boards_pk: number, payload: TaskObject) => {
 export const getBoardTitleAndDescription = (id: number) => {
   return request(`boards/${id}/`, "GET");
 };
+
+export const deleteTask = (boards_pk: number, id: number) => {
+  return request(`boards/${boards_pk}/tasks/${id}/`, "DELETE");
+};
+
+export const patchTask = (
+  boards_pk: number,
+  id: number,
+  payload: { title: string; description: string; status: number }
+) => {
+  return request(`boards/${boards_pk}/tasks/${id}`, "PATCH", payload);
+};
