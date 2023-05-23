@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { deleteStage, deleteTask } from "../utils/apiUtils";
+import { deleteStage } from "../utils/apiUtils";
 import Modal from "./Modal";
 import UpdateStages from "./UpdateStages";
 import CreateTask from "./CreateTask";
-import UpdateTask from "./UpdateTask";
 import Task from "./Task";
 
 export default function StageCard(props: {
@@ -20,7 +19,7 @@ export default function StageCard(props: {
 }) {
   const [updateStage, setUpdateStage] = useState(false);
   const [showCreateTask, setShowCreateTask] = useState(false);
-  const [showTaskSetting, setShowTaskSetting] = useState(false);
+  // const [showTaskSetting, setShowTaskSetting] = useState(false);
 
   const closeForm = () => {
     setUpdateStage(false);
@@ -112,7 +111,7 @@ export default function StageCard(props: {
             <div
               key={item.id}
               className={`text-gray-700 my-3 rounded-lg  bg-gray-100 ease-out hover:translate-y-1 transition-all`}
-              onClick={() => setShowTaskSetting(true)}
+              // onClick={() => setShowTaskSetting(true)}
             >
               {item.status_object.id &&
               props.id &&
