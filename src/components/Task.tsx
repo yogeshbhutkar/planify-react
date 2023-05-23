@@ -27,13 +27,13 @@ export default function Task(props: {
           Due Today
         </p>
       );
-    } else if (currentDate > propsDate) {
+    } else if (currentDate < propsDate) {
       return (
         <p className="bg-green-300 rounded-full mt-1 text-green-800 font-bold text-[12px] mr-1 px-2 py-2">
-          Due Tomorrow
+          Due Later
         </p>
       );
-    } else if (currentDate < propsDate) {
+    } else if (currentDate > propsDate) {
       return (
         <p className="bg-red-300 rounded-full mt-1 font-bold text-[12px] mr-1 text-red-800 px-2 py-2">
           Overdue
