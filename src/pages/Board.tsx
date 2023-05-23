@@ -24,7 +24,7 @@ export default function Board(props: { id: number }) {
   useEffect(() => {
     try {
       getStages().then((res) => {
-        setStages(res);
+        // setStages(res);
         setResults(res.results);
       });
     } catch (err) {
@@ -47,7 +47,7 @@ export default function Board(props: { id: number }) {
   const [boardDetails, setBoardDetails] = useState<Result>();
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState<TaskResult[]>();
-  const [stages, setStages] = useState<Stages>();
+  // const [stages, setStages] = useState<Stages>();
   const [results, setResults] = useState<Result[]>();
   const [stageModal, setStageModal] = useState(false);
 
