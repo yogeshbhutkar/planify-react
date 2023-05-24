@@ -62,7 +62,7 @@ export default function Board(props: { id: number }) {
   };
 
   const onDragEnd = (result: DropResult) => {
-    console.log(result);
+    // console.log(result);
 
     const { destination, source, draggableId } = result;
 
@@ -90,7 +90,7 @@ export default function Board(props: { id: number }) {
         () => console.log("successfully pushed to the backend")
       );
 
-      console.log(taskFind);
+      // console.log(taskFind);
     }
 
     if (source.droppableId === destination.droppableId && tasks) {

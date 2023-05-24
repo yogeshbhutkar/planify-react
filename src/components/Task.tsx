@@ -60,7 +60,7 @@ export default function Task(props: {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          className={`text-gray-700 cursor-pointer my-2 rounded-lg hover:translate-y-2 transition-all ease-in  bg-gray-200 `}
+          className={`text-gray-700 cursor-pointer my-2 rounded-lg hover:translate-y-2 ease-linear  bg-gray-200 `}
         >
           <button
             onClick={() => {
