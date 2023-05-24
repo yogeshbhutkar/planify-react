@@ -3,11 +3,13 @@ import {
   getAllTasks,
   getBoardTitleAndDescription,
   getStages,
+  patchTask,
 } from "../utils/apiUtils";
 import StageCard from "../components/StageCard";
 import Modal from "../components/Modal";
 import CreateStage from "../components/CreateStage";
 import { ClipLoader } from "react-spinners";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 export default function Board(props: { id: number }) {
   useEffect(() => {
@@ -59,6 +61,37 @@ export default function Board(props: { id: number }) {
     setResults((prev) => prev?.filter((item) => item.id !== id));
   };
 
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    if (source.droppableId !== destination.droppableId && tasks) {
+      const taskFind = (tasks.filter(
+        (item) => item.id === parseInt(draggableId)
+      )[0].status_object.id = parseInt(destination.droppableId));
+
+      const currentItem = tasks.filter(
+        (item) => item.id === parseInt(draggableId)
+      )[0];
+
+      patchTask(currentItem.board, currentItem.id, { status: taskFind }).then(
+        () => console.log("successfully pushed to the backend")
+      );
+
+      console.log(taskFind);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -98,25 +131,31 @@ export default function Board(props: { id: number }) {
             </button>
           </div>
           <div>
-            {results &&
-              results.map((item) => (
-                <div className="inline-flex " key={item.id}>
-                  <StageCard
-                    removeParticularTaskCB={removeParticularTask}
-                    tasks={tasks}
-                    stages={results}
-                    boardID={props.id}
-                    id={item ? item.id : -1}
-                    title={item ? item.title : ""}
-                    description={item ? item.description : ""}
-                    updateStagesCB={updateStages}
-                    boardTitle={boardDetails ? boardDetails.title : ""}
-                    boardDescription={
-                      boardDetails ? boardDetails.description : ""
-                    }
-                  />
-                </div>
-              ))}
+            <DragDropContext
+              onDragEnd={(result) => {
+                onDragEnd(result);
+              }}
+            >
+              {results &&
+                results.map((item) => (
+                  <div className="inline-flex " key={item.id}>
+                    <StageCard
+                      removeParticularTaskCB={removeParticularTask}
+                      tasks={tasks}
+                      stages={results}
+                      boardID={props.id}
+                      id={item ? item.id : -1}
+                      title={item ? item.title : ""}
+                      description={item ? item.description : ""}
+                      updateStagesCB={updateStages}
+                      boardTitle={boardDetails ? boardDetails.title : ""}
+                      boardDescription={
+                        boardDetails ? boardDetails.description : ""
+                      }
+                    />
+                  </div>
+                ))}
+            </DragDropContext>
           </div>
           <div>
             <Modal open={stageModal} closeCB={() => setStageModal(false)}>

@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import UpdateStages from "./UpdateStages";
 import CreateTask from "./CreateTask";
 import Task from "./Task";
+import { Droppable } from "react-beautiful-dnd";
 
 export default function StageCard(props: {
   tasks: TaskResult[] | undefined;
@@ -79,7 +80,7 @@ export default function StageCard(props: {
           </div>
           <button
             onClick={() => setShowCreateTask(true)}
-            className="bg-gray-300 rounded-xl px-3 py-2 w-full hover:bg-blue-500 hover:text-white text-gray-700 mt-3 font-semibold "
+            className="bg-gray-300 rounded-xl px-3 py-2 w-full hover:text-blue-800 hover:bg-blue-300  text-gray-700 mt-3 font-semibold hover:font-bold"
           >
             Create Task
           </button>
@@ -105,34 +106,42 @@ export default function StageCard(props: {
           closeFormCB={closeCreateTask}
         />
       </Modal>
-      {props.tasks && (
-        <div className="mx-3">
-          {props.tasks.map((item) => (
-            <div
-              key={item.id}
-              className={`text-gray-700 my-3 rounded-lg  bg-gray-100 ease-out hover:translate-y-1 transition-all`}
-              // onClick={() => setShowTaskSetting(true)}
-            >
-              {item.status_object.id &&
-              props.id &&
-              item.status_object.id === props.id ? (
-                <Task
-                  boardID={props.boardID}
-                  description={item.description.split("#")[0]}
-                  dueDate={item.description.split("#")[1]}
-                  itemID={item.id}
-                  removeParticularTaskCB={props.removeParticularTaskCB}
-                  title={item.title}
-                  stageTitle={props.title}
-                  createdOn={item.created_date}
-                  statusID={props.id}
-                  stages={props.stages}
-                />
-              ) : null}
-            </div>
-          ))}
-        </div>
-      )}
+      <Droppable droppableId={props.id.toString()}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {props.tasks && (
+              <div className="mx-3">
+                {props.tasks.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className={`text-gray-700 my-3 rounded-lg  `}
+                    // onClick={() => setShowTaskSetting(true)}
+                  >
+                    {item.status_object.id &&
+                    props.id &&
+                    item.status_object.id === props.id ? (
+                      <Task
+                        index={index}
+                        boardID={props.boardID}
+                        description={item.description.split("#")[0]}
+                        dueDate={item.description.split("#")[1]}
+                        itemID={item.id}
+                        removeParticularTaskCB={props.removeParticularTaskCB}
+                        title={item.title}
+                        stageTitle={props.title}
+                        createdOn={item.created_date}
+                        statusID={props.id}
+                        stages={props.stages}
+                      />
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            )}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 }

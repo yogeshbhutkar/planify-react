@@ -107,7 +107,13 @@ export const deleteTask = (boards_pk: number, id: number) => {
 export const patchTask = (
   boards_pk: number,
   id: number,
-  payload: { title: string; description: string; status: number }
+  payload:
+    | { title: string; description: string; status: number }
+    | { status: number }
 ) => {
   return request(`boards/${boards_pk}/tasks/${id}`, "PATCH", payload);
+};
+
+export const getUserDetails = () => {
+  return request(`users/me/`, "GET");
 };

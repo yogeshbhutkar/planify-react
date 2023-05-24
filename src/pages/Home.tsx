@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
-import { listBoards } from "../utils/apiUtils";
+import { getUserDetails, listBoards } from "../utils/apiUtils";
 import Modal from "../components/Modal";
 import CreateBoard from "../components/CreateBoard";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Home() {
+  useEffect(() => {
+    getUserDetails().then((res) => setCurrentUser(res.username));
+  }, []);
+
   useEffect(() => {
     try {
       listBoards()
@@ -27,6 +31,7 @@ function Home() {
   const [board, setBoard] = useState<Result[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [boardLoading, setBoardLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState("");
 
   return (
     <>
@@ -45,6 +50,9 @@ function Home() {
       ) : (
         <div className="inline-block p-10 w-screen">
           <div className="pt-7 px-7 ">
+            <p className="font-bold text-3xl mb-11 block text-gray-200">
+              Welcome, {currentUser}
+            </p>
             <p className="font-bold text-2xl inline-block text-gray-200">
               Boards
             </p>
