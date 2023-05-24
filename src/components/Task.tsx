@@ -19,6 +19,9 @@ export default function Task(props: {
 }) {
   const [editTask, setEditTask] = useState(false);
   const dateObject = new Date();
+  const tomorrowsDateObject = new Date();
+  tomorrowsDateObject.setDate(tomorrowsDateObject.getDate() + 1);
+  const tomorrowsDate = tomorrowsDateObject.toISOString().split("T")[0];
   const currentDate = dateObject.toISOString().split("T")[0];
   const propsDate = new Date(props.dueDate).toISOString().split("T")[0];
 
@@ -27,6 +30,12 @@ export default function Task(props: {
       return (
         <p className="bg-purple-300 rounded-full mt-1 font-bold text-[12px] mr-1 text-purple-800 px-2 py-2">
           Due Today
+        </p>
+      );
+    } else if (tomorrowsDate === propsDate) {
+      return (
+        <p className="bg-amber-300 rounded-full mt-1 font-bold text-[12px] mr-1 text-amber-600 px-2 py-2">
+          Due Tomorrow
         </p>
       );
     } else if (currentDate < propsDate) {

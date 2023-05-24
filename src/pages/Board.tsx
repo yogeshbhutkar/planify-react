@@ -62,6 +62,8 @@ export default function Board(props: { id: number }) {
   };
 
   const onDragEnd = (result: DropResult) => {
+    console.log(result);
+
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -89,6 +91,13 @@ export default function Board(props: { id: number }) {
       );
 
       console.log(taskFind);
+    }
+
+    if (source.droppableId === destination.droppableId && tasks) {
+      const items = Array.from(tasks);
+      const [reorderData] = items.splice(result.source.index, 1);
+      items.splice(destination.index, 0, reorderData);
+      setTasks(items);
     }
   };
 

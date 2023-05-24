@@ -90,7 +90,7 @@ function Navbar() {
         {menuData.map((ele) =>
           ele.link === "/logout" ? (
             <Link
-              className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#272A30]"
+              className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#37393f]"
               onClick={() => {
                 localStorage.removeItem("token");
                 window.location.reload();
@@ -117,7 +117,7 @@ function Navbar() {
             </Link>
           ) : (
             <Link
-              className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#272A30]"
+              className="group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-[#37393f]"
               href={ele.link}
               key={ele.id}
             >
