@@ -17,7 +17,7 @@ export default function CreateBoard(props: { closeFormCB: () => void }) {
       setTitleError("Title cannot be empty.");
     }
     if (form.description.length === 0) {
-      setDescriptionError("Description cannot be empty.");
+      form.description = "Description goes here.";
     }
 
     try {
