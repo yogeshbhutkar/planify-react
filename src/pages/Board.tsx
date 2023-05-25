@@ -146,8 +146,10 @@ export default function Board(props: { id: number }) {
 
           <div className="ml-7 mb-7">
             <div
-              className={`text-gray-300 mr-4 inline-block bg-[#35363d] pr-3 text-sm font-semibold px-2 py-1 ${
-                showOverDue ? "border border-slate-500" : ""
+              className={` mr-4 inline-block bg-[#35363d] pr-3 text-sm font-semibold px-2 py-1 ${
+                showOverDue
+                  ? "border-2 border-slate-500 text-gray-300"
+                  : " text-gray-400"
               }  rounded-2xl w-fit hover:cursor-pointer select-none`}
               onClick={() => setShowOverdue((prev) => !prev)}
             >
@@ -155,7 +157,9 @@ export default function Board(props: { id: number }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-5 h-5 text-red-400 inline"
+                className={`w-5 h-5 ${
+                  showOverDue ? "text-red-400" : "text-red-500"
+                }  inline`}
               >
                 <path
                   fillRule="evenodd"
@@ -167,8 +171,10 @@ export default function Board(props: { id: number }) {
               <p className="inline pl-1">Overdue</p>
             </div>
             <div
-              className={`text-gray-300 mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
-                showDueToday ? "border border-slate-500" : ""
+              className={` mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
+                showDueToday
+                  ? "border-2 border-slate-500 text-gray-300"
+                  : "text-gray-400"
               } rounded-2xl w-fit hover:cursor-pointer select-none`}
               onClick={() => setShowDueToday((prev) => !prev)}
             >
@@ -176,7 +182,9 @@ export default function Board(props: { id: number }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-5 h-5 text-purple-400 inline"
+                className={`w-5 h-5 ${
+                  showDueToday ? "text-purple-400 " : "text-purple-500 "
+                } inline`}
               >
                 <path
                   fillRule="evenodd"
@@ -188,8 +196,10 @@ export default function Board(props: { id: number }) {
               <p className="inline pl-1">Due Today</p>
             </div>
             <div
-              className={`text-gray-300 mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
-                showDueTomorrow ? "border border-slate-500" : ""
+              className={` mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
+                showDueTomorrow
+                  ? "border-2 border-slate-500 text-gray-300"
+                  : "text-gray-400"
               } rounded-2xl w-fit hover:cursor-pointer select-none`}
               onClick={() => setShowDueTomorrow((prev) => !prev)}
             >
@@ -197,7 +207,9 @@ export default function Board(props: { id: number }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-5 h-5 text-amber-400 inline"
+                className={`w-5 h-5 ${
+                  showDueTomorrow ? "text-amber-400" : "text-amber-500 "
+                } inline`}
               >
                 <path
                   fillRule="evenodd"
@@ -209,8 +221,10 @@ export default function Board(props: { id: number }) {
               <p className="inline pl-1">Due Tomorrow</p>
             </div>
             <div
-              className={`text-gray-300 mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
-                showDueLater ? "border border-slate-500" : ""
+              className={` mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
+                showDueLater
+                  ? "border-2 border-slate-500 text-gray-300"
+                  : "text-gray-400"
               }  rounded-2xl w-fit hover:cursor-pointer select-none`}
               onClick={() => setShowDueLater((prev) => !prev)}
             >
@@ -218,7 +232,9 @@ export default function Board(props: { id: number }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-5 h-5 text-green-400 inline"
+                className={`w-5 h-5 ${
+                  showDueLater ? "text-green-400" : "text-green-600"
+                } inline`}
               >
                 <path
                   fillRule="evenodd"
