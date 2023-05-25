@@ -76,11 +76,11 @@ export default function StageCard(props: {
           <div className="w-fit">
             <div className="pr-16">
               <div className="inline-block">
-                <p className="font-bold text-xl">{props.title}</p>
+                <p className="font-bold text-xl select-none">{props.title}</p>
               </div>
               <div className="inline-block pl-2"></div>
             </div>
-            <p className="pb-3 pt-1">{props.description}</p>
+            <p className="pb-3 pt-1 select-none">{props.description}</p>
           </div>
           <button
             onClick={() => setShowCreateTask(true)}

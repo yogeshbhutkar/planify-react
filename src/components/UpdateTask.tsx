@@ -22,7 +22,7 @@ export default function UpdateTask(props: {
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
 
-  const [statusId, setStatusId] = useState(props.statusID);
+  // const [statusId, setStatusId] = useState(props.statusID);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,8 +40,8 @@ export default function UpdateTask(props: {
     try {
       const payload = {
         title: form.title,
-        description: form.description,
-        status: statusId,
+        description: form.description + "#" + props.dueDate,
+        status: props.statusID,
       };
       setButtonText("Loading");
 
@@ -112,11 +112,11 @@ export default function UpdateTask(props: {
               value={props.dueDate}
             />
           </div>
-          <div className="pt-3">
-            <label className="font-bold text-md block" htmlFor="dropdown">
+          {/* <div className="pt-3">
+          <label className="font-bold text-md block" htmlFor="dropdown">
               Stage
             </label>
-            <select
+          <select
               onChange={(e) => setStatusId(parseInt(e.target.value))}
               className="mt-2 text-gray-300 font-semibold text-md focus:outline-none rounded-lg px-5 py-2 bg-[#3b4046]"
             >
@@ -127,7 +127,7 @@ export default function UpdateTask(props: {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {titleError && (
             <div className="text-white bg-red-400 text-center py-3 rounded-xl mt-5">

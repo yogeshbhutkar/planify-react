@@ -122,7 +122,7 @@ export default function Board(props: { id: number }) {
       ) : (
         <div className="inline-block p-10 w-screen">
           <div>
-            <p className="text-gray-300 font-bold text-3xl ml-7 my-7 inline-block">
+            <p className="text-gray-300 select-none font-bold text-3xl ml-7 my-7 inline-block">
               Stages
             </p>
             <button

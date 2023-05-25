@@ -60,11 +60,11 @@ export default function Card(props: {
         >
           <div className="pr-16">
             <div className="inline-block">
-              <p className="font-bold  text-xl  ">{props.title}</p>
+              <p className="font-bold  text-xl select-none ">{props.title}</p>
             </div>
             <div className="inline-block pl-2"></div>
           </div>
-          <p className="pb-3 pt-2">{props.description}</p>
+          <p className="pb-3 select-none pt-2">{props.description}</p>
         </div>
       </div>
 

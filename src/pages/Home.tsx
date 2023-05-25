@@ -50,10 +50,10 @@ function Home() {
       ) : (
         <div className="inline-block p-10 w-screen">
           <div className="pt-7 px-7 ">
-            <p className="font-bold text-3xl mb-11 block text-gray-200">
+            <p className="font-bold select-none text-3xl mb-11 block text-gray-200">
               Welcome, {currentUser}
             </p>
-            <p className="font-bold text-2xl inline-block text-gray-200">
+            <p className="font-bold text-2xl select-none inline-block text-gray-200">
               Boards
             </p>
             <button
