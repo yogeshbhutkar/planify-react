@@ -5,6 +5,10 @@ import UpdateTask from "./UpdateTask";
 import { Draggable } from "react-beautiful-dnd";
 
 export default function Task(props: {
+  showDueToday: boolean;
+  showDueTomorrow: boolean;
+  showDueLater: boolean;
+  showOverDue: boolean;
   dueDate: string;
   itemID: number;
   stageTitle: string;
@@ -53,6 +57,18 @@ export default function Task(props: {
     }
   };
 
+  const getMessage = () => {
+    if (currentDate === propsDate) {
+      return "Due Today";
+    } else if (tomorrowsDate === propsDate) {
+      return "Due Tomorrow";
+    } else if (currentDate < propsDate) {
+      return "Due Later";
+    } else if (currentDate > propsDate) {
+      return "Overdue";
+    }
+  };
+
   return (
     <Draggable draggableId={props.itemID.toString()} index={props.index}>
       {(provided) => (
@@ -60,7 +76,17 @@ export default function Task(props: {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          className={`text-gray-700 cursor-pointer my-2 rounded-lg hover:translate-y-2 ease-linear  bg-gray-200 `}
+          className={`text-gray-700 cursor-pointer my-2 rounded-lg hover:translate-y-2 ease-linear  bg-gray-200 ${
+            getMessage() === "Due Today" && !props.showDueToday ? "hidden" : ""
+          }
+          ${
+            getMessage() === "Due Tomorrow" && !props.showDueTomorrow
+              ? "hidden"
+              : ""
+          }${
+            getMessage() === "Due Later" && !props.showDueLater ? "hidden" : ""
+          }${getMessage() === "Overdue" && !props.showOverDue ? "hidden" : ""}
+          `}
         >
           <button
             onClick={() => {
@@ -99,6 +125,7 @@ export default function Task(props: {
             </div>
             <Modal open={editTask} closeCB={() => setEditTask(false)}>
               <UpdateTask
+                dueDate={props.dueDate}
                 stageTitle={props.stageTitle}
                 title={props.title}
                 stages={props.stages}

@@ -7,6 +7,10 @@ import Task from "./Task";
 import { Droppable } from "react-beautiful-dnd";
 
 export default function StageCard(props: {
+  showDueToday: boolean;
+  showDueTomorrow: boolean;
+  showDueLater: boolean;
+  showOverDue: boolean;
   tasks: TaskResult[] | undefined;
   boardID: number;
   stages: Result[];
@@ -121,6 +125,10 @@ export default function StageCard(props: {
                     props.id &&
                     item.status_object.id === props.id ? (
                       <Task
+                        showDueLater={props.showDueLater}
+                        showDueToday={props.showDueToday}
+                        showDueTomorrow={props.showDueTomorrow}
+                        showOverDue={props.showOverDue}
                         index={index}
                         boardID={props.boardID}
                         description={item.description.split("#")[0]}

@@ -10,6 +10,7 @@ export default function UpdateTask(props: {
   createdOn: string;
   boardID: number;
   itemID: number;
+  dueDate: string;
   stages: Result[];
 }) {
   const [form, setForm] = useState<TaskUpdate>({
@@ -94,8 +95,21 @@ export default function UpdateTask(props: {
               type="text"
               id="createdOn"
               name="createdOn"
-              className="border-1 focus:outline-none text-white border-slate-600 w-full  bg-[#3b4046]  rounded-lg p-2 my-2 flex-1"
+              className="border-1 focus:outline-none text-white select-none border-slate-600 w-full  bg-[#3b4046]  rounded-lg p-2 my-2 flex-1"
               value={form.created_on.split("T")[0]}
+            />
+          </div>
+          <div className="pt-3">
+            <label className="font-bold text-md" htmlFor="dueDate">
+              Due Date
+            </label>
+            <input
+              readOnly
+              type="text"
+              id="dueDate"
+              name="dueDate"
+              className="border-1 select-none focus:outline-none text-white border-slate-600 w-full  bg-[#3b4046]  rounded-lg p-2 my-2 flex-1"
+              value={props.dueDate}
             />
           </div>
           <div className="pt-3">

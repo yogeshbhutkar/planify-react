@@ -5,7 +5,15 @@ type RequestMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 export const request = async (
   endpoint: string,
   method: RequestMethod = "GET",
-  data: any = {}
+  data:
+    | { username: string; password: string }
+    | {}
+    | BoardForm
+    | Stage
+    | TaskObject
+    | { title: string; description: string; status: number }
+    | { status: number }
+    | Register = {}
 ) => {
   let url;
   let payload: string;
@@ -13,7 +21,7 @@ export const request = async (
   if (method === "GET") {
     const requestParams = data
       ? `?${Object.keys(data)
-          .map((key) => `${key}=${data[key]}`)
+          .map((key) => `${key}=${data[key as keyof typeof data]}`)
           .join("&")}`
       : "";
     url = `${API_BASE_URL}${endpoint}${requestParams}`;
@@ -116,4 +124,8 @@ export const patchTask = (
 
 export const getUserDetails = () => {
   return request(`users/me/`, "GET");
+};
+
+export const registerUser = (payload: Register) => {
+  return request(`auth/registration/`, "POST", payload);
 };

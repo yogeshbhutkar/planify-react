@@ -47,6 +47,10 @@ export default function Board(props: { id: number }) {
   }, []);
 
   const [boardDetails, setBoardDetails] = useState<Result>();
+  const [showOverDue, setShowOverdue] = useState(true);
+  const [showDueToday, setShowDueToday] = useState(true);
+  const [showDueTomorrow, setShowDueTomorrow] = useState(true);
+  const [showDueLater, setShowDueLater] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState<TaskResult[]>();
   // const [stages, setStages] = useState<Stages>();
@@ -139,6 +143,93 @@ export default function Board(props: { id: number }) {
               </svg>
             </button>
           </div>
+
+          <div className="ml-7 mb-7">
+            <div
+              className={`text-gray-300 mr-4 inline-block bg-[#35363d] pr-3 text-sm font-semibold px-2 py-1 ${
+                showOverDue ? "border border-slate-500" : ""
+              }  rounded-2xl w-fit hover:cursor-pointer select-none`}
+              onClick={() => setShowOverdue((prev) => !prev)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 text-red-400 inline"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              <p className="inline pl-1">Overdue</p>
+            </div>
+            <div
+              className={`text-gray-300 mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
+                showDueToday ? "border border-slate-500" : ""
+              } rounded-2xl w-fit hover:cursor-pointer select-none`}
+              onClick={() => setShowDueToday((prev) => !prev)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 text-purple-400 inline"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              <p className="inline pl-1">Due Today</p>
+            </div>
+            <div
+              className={`text-gray-300 mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
+                showDueTomorrow ? "border border-slate-500" : ""
+              } rounded-2xl w-fit hover:cursor-pointer select-none`}
+              onClick={() => setShowDueTomorrow((prev) => !prev)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 text-amber-400 inline"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              <p className="inline pl-1">Due Tomorrow</p>
+            </div>
+            <div
+              className={`text-gray-300 mr-4 inline-block bg-[#35363d] text-sm font-semibold px-2 pr-3 py-1 ${
+                showDueLater ? "border border-slate-500" : ""
+              }  rounded-2xl w-fit hover:cursor-pointer select-none`}
+              onClick={() => setShowDueLater((prev) => !prev)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 text-green-400 inline"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              <p className="inline pl-1">Due Later</p>
+            </div>
+          </div>
           <div>
             <DragDropContext
               onDragEnd={(result) => {
@@ -149,6 +240,10 @@ export default function Board(props: { id: number }) {
                 results.map((item) => (
                   <div className="inline-flex " key={item.id}>
                     <StageCard
+                      showDueLater={showDueLater}
+                      showDueToday={showDueToday}
+                      showDueTomorrow={showDueTomorrow}
+                      showOverDue={showOverDue}
                       removeParticularTaskCB={removeParticularTask}
                       tasks={tasks}
                       stages={results}
