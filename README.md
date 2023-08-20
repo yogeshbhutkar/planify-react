@@ -27,3 +27,11 @@ Run the development server
   npm run dev
 ```
     
+## Screenshots
+
+[stages](https://postimg.cc/q6nzRP24)
+
+[boards](https://postimg.cc/Ppvq3g3Y)
+
+[login](https://postimg.cc/MnZp2M3W)
+
